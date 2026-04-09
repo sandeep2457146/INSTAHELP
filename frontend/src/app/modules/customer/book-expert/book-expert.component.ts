@@ -86,10 +86,15 @@ import { ExpertProfile } from '../../../core/models/user.model';
                 </div>
 
                 <div class="mb-4">
-                  <label class="form-label fw-semibold">Preferred Date <small class="text-muted">(optional)</small></label>
-                  <input type="date" class="form-control" formControlName="scheduledDate"
+                  <label class="form-label fw-semibold">
+                    Preferred Date <span class="text-danger">*</span>
+                  </label>
+                  <input type="date" class="form-control"
+                         [class.is-invalid]="submitted && bf['scheduledDate'].errors"
+                         formControlName="scheduledDate"
                          [min]="today">
-                  <div class="form-text">Leave blank if you're flexible with the schedule.</div>
+                  <div class="invalid-feedback">Please select a preferred date.</div>
+                  <div class="form-text">Select the date you would like the expert to visit.</div>
                 </div>
 
                 <button type="submit"
@@ -127,7 +132,7 @@ export class BookExpertComponent implements OnInit {
   ) {
     this.bookingForm = this.fb.group({
       requirementNote: ['', Validators.required],
-      scheduledDate:   [null]
+      scheduledDate:   [null, Validators.required]
     });
   }
 
